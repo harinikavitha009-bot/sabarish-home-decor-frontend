@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Customer Enquiries | Sabarish Home Decor</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f0ea;
+            color: #3d3027;
+            margin: 0;
+        }
+
+        header {
+            background: #704b35;
+            color: white;
+            text-align: center;
+            padding: 22px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+        }
+
+        button {
+            background: #704b35;
+            color: white;
+            padding: 10px 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        .back {
+            background: #666;
+        }
+
+        #message {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>Sabarish Home Decor</h1>
+    <p>Customer Enquiries</p>
+</header>
+
+<div class="container">
+
+    <h2>Customer Enquiries</h2>
+
+    <p id="message">Loading customer enquiries...</p>
+
+<div style="overflow-x: auto;">
+    <table border="1" cellpadding="10"
+           cellspacing="0"
+           style="width:100%; border-collapse:collapse;">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Service</th>
+                <th>Message</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="enquiryTableBody">
+        </tbody>
+    </table>
+</div>
+
+    <button onclick="loadEnquiries()">Refresh</button>
+
+    <button class="back"
+            onclick="window.location.href='dashboard.html'">
+        Back to Dashboard
+    </button>
+
+</div>
+
+<script>
+    const API_URL =
+    "https://sabarish-home-decor-backend1.onrender.com/api/contact";
+
+    async function loadEnquiries() {
+        const message = document.getElementById("message");
+        const tableBody = document.getElementById("enquiryTableBody");
+
+        message.textContent = "Loading customer enquiries...";
+        tableBody.innerHTML = "";
+
+        try {
+            const username = sessionStorage.getItem("adminUsername");
+const password = sessionStorage.getItem("adminPassword");
+
+if (!username || !password) {
+    alert("Please login again.");
+    window.location.href = "login.html";
+    return;
+}
+
+const response = await fetch(API_URL, {
+    method: "GET",
+    headers: {
+        "Authorization": "Basic " + btoa(username + ":" + password)
+    }
+});
+            if (!response.ok) {
+                throw new Error("HTTP error: " + response.status);
+            }
+
+            const enquiries = await response.json();
+
+            if (enquiries.length === 0) {
+                message.textContent = "No customer enquiries found.";
+                return;
+            }
+
+            enquiries.forEach(enquiry => {
+    const row = document.createElement("tr");
+
+    [
+        enquiry.id,
+        enquiry.name,
+        enquiry.email,
+        enquiry.phone,
+        enquiry.service,
+        enquiry.message
+    ].forEach(value => {
+        const cell = document.createElement("td");
+        cell.textContent = value ?? "-";
+        cell.style.padding = "10px";
+        cell.style.border = "1px solid #ddd";
+        row.appendChild(cell);
+    });
+
+    // Action column
+    const actionCell = document.createElement("td");
+
+    const deleteButton = document.createElement("button");
+    deleteButton.textContent = "Delete";
+    deleteButton.style.background = "#c0392b";
+
+    deleteButton.onclick = async function () {
+        const confirmDelete = confirm(
+            "Delete enquiry ID " + enquiry.id + "?"
+        );
+
+        if (!confirmDelete) return;
+
+        try {
+            const username = sessionStorage.getItem("adminUsername");
+            const password = sessionStorage.getItem("adminPassword");
+
+            const response = await fetch(
+                API_URL + "/" + enquiry.id,
+                {
+                    method: "DELETE",
+                    headers: {
+                        "Authorization": "Basic " +
+                            btoa(username + ":" + password)
+                    }
+                }
+            );
+
+            if (!response.ok) {
+                throw new Error("HTTP error: " + response.status);
+            }
+
+            alert("Enquiry deleted successfully!");
+            loadEnquiries();
+
+        } catch (error) {
+            alert("Delete failed: " + error.message);
+        }
+    };
+
+    actionCell.appendChild(deleteButton);
+    actionCell.style.padding = "10px";
+    actionCell.style.border = "1px solid #ddd";
+    row.appendChild(actionCell);
+
+    tableBody.appendChild(row);
+});
+
+            message.textContent =
+                "Total enquiries: " + enquiries.length;
+
+       } catch (error) {
+    console.error("Error loading enquiries:", error);
+
+    message.textContent =
+        "Error: " + error.message;
+}
+    }
+
+    loadEnquiries();
+</script>
+
+</body>
+</html>

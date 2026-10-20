@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Project Details | SABARI'S HOME DECOR</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header class="navbar">
+        <a href="index.html#home" class="logo">
+            <img src="images/logo.jpg" alt="Sabari's Home Decor Logo">
+        </a>
+
+        <nav>
+            <a href="index.html#home">Home</a>
+            <a href="about.html">About</a>
+            <a href="architectural-design.html">Architecture</a>
+            <a href="interior-design.html">Interiors</a>
+            <a href="index.html#projects">Projects</a>
+            <a href="index.html#gallery">Gallery</a>
+            <a href="index.html#contact">Contact</a>
+        </nav>
+    </header>
+
+    <section class="projects">
+        <p class="small-heading">OUR PROJECT</p>
+
+        <h2 id="projectTitle">Project Details</h2>
+
+        <div class="about-image">
+            <img id="projectImage"
+                 src=""
+                 alt="Completed design project"
+                 style="width:100%; max-width:900px; height:auto;">
+        </div>
+
+        <h3 id="projectCategory"></h3>
+
+        <p id="projectDescription"></p>
+
+        <a href="index.html#contact" class="gold-btn">
+            ENQUIRE ABOUT A SIMILAR PROJECT →
+        </a>
+
+        <br><br>
+
+        <a href="index.html#projects">← Back to Projects</a>
+    </section>
+
+    <footer class="footer">
+        <p>SABARI'S HOME DECOR</p>
+    </footer>
+
+    <script>
+const API_URL =
+    "https://sabarish-home-decor-backend1.onrender.com/api/projects";
+
+const sampleProjects = {
+    villa: {
+        title: "Modern Villa",
+        category: "Residential Architecture & Interiors",
+        image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=85",
+        description: "A modern residential design focused on elegant architecture, comfortable living spaces, and a contemporary appearance."
+    },
+    home: {
+        title: "Contemporary Home",
+        category: "Residential Interior Design",
+        image: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1200&q=85",
+        description: "A contemporary interior concept combining stylish furnishings, thoughtful layouts, and functional living spaces."
+    },
+    commercial: {
+        title: "Commercial Space",
+        category: "Commercial Architecture & Interiors",
+        image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=85",
+        description: "A contemporary commercial design concept intended to create an attractive and practical environment."
+    }
+};
+
+async function loadProjectDetails() {
+    const params = new URLSearchParams(window.location.search);
+    const sampleKey = params.get("project");
+    const projectId = params.get("id");
+
+    let project = null;
+
+    // Existing sample projects
+    if (sampleKey && sampleProjects[sampleKey]) {
+        project = {
+            ...sampleProjects[sampleKey],
+            imageUrl: sampleProjects[sampleKey].image
+        };
+    }
+
+    // Projects added through Admin Panel
+    if (projectId) {
+        try {
+            const response = await fetch(
+                API_URL + "/" + encodeURIComponent(projectId)
+            );
+
+            if (!response.ok) {
+                throw new Error("Project not found");
+            }
+
+            project = await response.json();
+        } catch (error) {
+            console.error("Unable to load project:", error);
+            project = null;
+        }
+    }
+
+    const title = document.getElementById("projectTitle");
+    const image = document.getElementById("projectImage");
+    const category = document.getElementById("projectCategory");
+    const description = document.getElementById("projectDescription");
+
+    if (!project) {
+        title.textContent = "Project Not Found";
+        description.textContent =
+            "Please return to our projects page and select a project.";
+        image.style.display = "none";
+        category.textContent = "";
+        return;
+    }
+
+    title.textContent = project.title || "Home Decor Project";
+    category.textContent = project.category || "";
+    description.textContent = project.description || "";
+
+    const imageUrl = project.imageUrl || project.image;
+
+    if (imageUrl) {
+        image.src = imageUrl;
+        image.alt = project.title || "Home decor project";
+        image.style.display = "block";
+        image.onerror = function () {
+            this.style.display = "none";
+        };
+    } else {
+        image.style.display = "none";
+    }
+
+    document.title =
+        (project.title || "Project Details") + " | SABARI'S HOME DECOR";
+}
+
+loadProjectDetails();
+</script>
+
+</body>
+</html>

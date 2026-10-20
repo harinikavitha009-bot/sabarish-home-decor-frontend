@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Architectural Design | SABARI'S HOME DECOR</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .architecture-page {
+            background: #10100e;
+            color: white;
+            min-height: 100vh;
+        }
+
+        .architecture-hero {
+            min-height: 480px;
+            display: flex;
+            align-items: center;
+            padding: 70px 8%;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    rgba(0,0,0,0.85),
+                    rgba(0,0,0,0.2)
+                ),
+                url("images/hero.jpg") center / cover no-repeat;
+        }
+
+        .architecture-content {
+            max-width: 600px;
+        }
+
+        .architecture-content h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(38px, 5vw, 65px);
+            font-weight: 400;
+            margin: 20px 0;
+        }
+
+        .architecture-content h1 span {
+            color: #d8b36a;
+        }
+
+        .architecture-content p {
+            line-height: 1.9;
+            color: #eee;
+            margin-bottom: 25px;
+        }
+
+        .architecture-details {
+            padding: 65px 8%;
+        }
+
+        .architecture-details h2 {
+            color: #d8b36a;
+            font-family: 'Playfair Display', serif;
+            font-size: 35px;
+            margin-bottom: 20px;
+        }
+
+        .architecture-details p {
+            line-height: 1.9;
+            color: #d0ccc5;
+            max-width: 850px;
+        }
+
+        .architecture-list {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 35px;
+        }
+
+        .architecture-item {
+            border: 1px solid #51432d;
+            padding: 25px;
+        }
+
+        .architecture-item h3 {
+            color: #d8b36a;
+            margin-bottom: 12px;
+        }
+
+        .architecture-item p {
+            font-size: 14px;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 30px;
+            color: #d8b36a;
+        }
+
+        @media (max-width: 700px) {
+            .architecture-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body class="architecture-page">
+
+    <header class="navbar">
+
+        <a href="index.html" class="logo">
+            <img src="images/logo.jpg"
+                 alt="Sabari's Home Decor Logo">
+        </a>
+
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="index.html#about">About</a>
+            <a href="index.html#services">Services</a>
+            <a href="index.html#projects">Projects</a>
+            <a href="index.html#contact">Contact</a>
+        </nav>
+
+        <a href="index.html#contact" class="enquire-btn">
+            Enquire Now
+        </a>
+
+    </header>
+
+    <section class="architecture-hero">
+
+        <div class="architecture-content">
+
+            <p class="small-heading">
+                SABARI'S HOME DECOR
+            </p>
+
+            <h1>
+                Architectural <span>Design</span>
+            </h1>
+
+            <p>
+                We create thoughtful architectural designs that
+                combine beauty, functionality and modern living.
+                Let us help transform your ideas into your dream space.
+            </p>
+
+            <a href="index.html#contact" class="gold-btn">
+                DISCUSS YOUR PROJECT →
+            </a>
+
+        </div>
+
+    </section>
+
+    <section class="architecture-details">
+
+        <p class="small-heading">WHAT WE OFFER</p>
+
+        <h2>Designing Spaces for Life</h2>
+
+        <p>
+            From initial planning to detailed design, our goal is
+            to create spaces that reflect your vision and make
+            everyday living more comfortable.
+        </p>
+
+        <div class="architecture-list">
+
+            <article class="architecture-item">
+                <h3>Residential Design</h3>
+                <p>
+                    Thoughtfully planned homes designed around
+                    your lifestyle and preferences.
+                </p>
+            </article>
+
+            <article class="architecture-item">
+                <h3>Commercial Design</h3>
+                <p>
+                    Functional and attractive spaces for offices,
+                    shops and other businesses.
+                </p>
+            </article>
+
+            <article class="architecture-item">
+                <h3>Space Planning</h3>
+                <p>
+                    Smart layouts that improve space utilisation,
+                    movement and functionality.
+                </p>
+            </article>
+
+        </div>
+
+        <a href="index.html" class="back-link">
+            ← Back to Home
+        </a>
+
+    </section>
+
+</body>
+</html>

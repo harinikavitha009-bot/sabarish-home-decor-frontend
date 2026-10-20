@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Projects | Sabarish Home Decor</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f0ea;
+            color: #3d3027;
+            margin: 0;
+        }
+
+        header {
+            background: #704b35;
+            color: white;
+            text-align: center;
+            padding: 25px;
+        }
+
+        .container {
+            max-width: 750px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+
+        .box {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px #0001;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 12px;
+            margin-top: 7px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+
+        button {
+            background: #704b35;
+            color: white;
+            padding: 12px 18px;
+            border: none;
+            border-radius: 6px;
+            margin-top: 18px;
+            cursor: pointer;
+        }
+
+        .back {
+            background: #666;
+        }
+
+        #message {
+            margin-top: 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>Sabarish Home Decor</h1>
+    <p>Manage Projects</p>
+</header>
+
+<div class="container">
+    <div class="box">
+        <h2>Add New Project</h2>
+
+        <form id="projectForm">
+            <label for="title">Project Title</label>
+            <input id="title" type="text" required
+                   placeholder="Example: Modern Living Room">
+
+            <label for="description">Description</label>
+            <textarea id="description" rows="4" required
+                      placeholder="Describe your project"></textarea>
+
+            <label for="category">Category</label>
+            <select id="category" required>
+                <option value="">Select Category</option>
+                <option>Residential</option>
+                <option>Commercial</option>
+                <option>Bedroom</option>
+                <option>Living Room</option>
+                <option>Kitchen</option>
+            </select>
+
+            <label for="imageUrl">Project Image URL</label>
+            <input id="imageUrl" type="url" required
+                   placeholder="https://example.com/image.jpg">
+
+            <button type="submit">Add Project</button>
+        </form>
+
+        <p id="message"></p>
+
+        <hr>
+
+<h2>Existing Projects</h2>
+
+<div id="projectList">
+    Loading projects...
+</div>
+
+<button onclick="loadProjects()">Refresh Projects</button>
+    </div>
+
+    <button class="back" onclick="goBack()">
+    Back to Dashboard
+</button>
+</div>
+
+<script>
+const API_URL = "https://sabarish-home-decor-backend1.onrender.com/api/projects";
+
+let editingProjectId = null;
+let authHeaders = {};
+
+const username = sessionStorage.getItem("adminUsername");
+const password = sessionStorage.getItem("adminPassword");
+
+if (!username || !password) {
+    alert("Please login again.");
+    window.location.href = "login.html";
+} else {
+    authHeaders = {
+        "Content-Type": "application/json",
+        "Authorization": "Basic " + btoa(username + ":" + password)
+    };
+}
+
+const form = document.getElementById("projectForm");
+const message = document.getElementById("message");
+
+form.addEventListener("submit", async function(event) {
+    event.preventDefault();
+
+    const project = {
+        title: document.getElementById("title").value.trim(),
+        description: document.getElementById("description").value.trim(),
+        category: document.getElementById("category").value,
+        imageUrl: document.getElementById("imageUrl").value.trim()
+    };
+
+    message.textContent = editingProjectId
+        ? "Updating project..."
+        : "Saving project...";
+
+    try {
+        const url = editingProjectId
+            ? `${API_URL}/${editingProjectId}`
+            : API_URL;
+
+        const response = await fetch(url, {
+            method: editingProjectId ? "PUT" : "POST",
+            headers: authHeaders,
+            body: JSON.stringify(project)
+        });
+
+        if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(
+        "Request failed: " + response.status + " - " + errorText
+    );
+}
+        message.textContent = editingProjectId
+            ? "Project updated successfully!"
+            : "Project added successfully!";
+
+        editingProjectId = null;
+        form.reset();
+        form.querySelector('button[type="submit"]').textContent = "Add Project";
+        document.querySelector(".box h2").textContent = "Add New Project";
+
+        await loadProjects();
+
+    } catch (error) {
+        console.error(error);
+        message.textContent =
+            "Save failed:" +error.message;
+    }
+});
+
+async function loadProjects() {
+    const projectList = document.getElementById("projectList");
+    projectList.textContent = "Loading projects...";
+
+    try {
+        const response = await fetch(API_URL, {
+            headers: authHeaders
+        });
+
+        if (!response.ok) {
+            throw new Error("Unable to load projects: " + response.status);
+        }
+
+        const projects = await response.json();
+        projectList.innerHTML = "";
+
+        if (!projects.length) {
+            projectList.textContent = "No projects added yet.";
+            return;
+        }
+
+        projects.forEach(project => {
+            const card = document.createElement("div");
+            card.style.cssText =
+                "border:1px solid #ddd;padding:15px;margin:12px 0;border-radius:8px;";
+
+            const title = document.createElement("h3");
+            title.textContent = project.title || "Untitled Project";
+
+            const description = document.createElement("p");
+            description.textContent = project.description || "";
+
+            const category = document.createElement("p");
+            category.textContent = "Category: " + (project.category || "-");
+
+            card.append(title, description, category);
+
+            if (project.imageUrl) {
+                const img = document.createElement("img");
+                img.src = project.imageUrl;
+                img.alt = project.title || "Project image";
+                img.style.cssText = "width:200px;max-width:100%;display:block;margin-top:10px;";
+                card.appendChild(img);
+            }
+
+            const editButton = document.createElement("button");
+            editButton.textContent = "Edit";
+            editButton.style.marginRight = "10px";
+            editButton.addEventListener("click", () => editProject(project));
+
+            const deleteButton = document.createElement("button");
+            deleteButton.textContent = "Delete";
+            deleteButton.style.background = "#b3261e";
+            deleteButton.addEventListener("click", () => deleteProject(project.id));
+
+            card.append(editButton, deleteButton);
+            projectList.appendChild(card);
+        });
+
+    } catch (error) {
+        console.error(error);
+        projectList.textContent =
+            "Unable to load projects. Check backend and authentication.";
+    }
+}
+
+function editProject(project) {
+    editingProjectId = project.id;
+
+    document.getElementById("title").value = project.title || "";
+    document.getElementById("description").value = project.description || "";
+    document.getElementById("category").value = project.category || "";
+    document.getElementById("imageUrl").value = project.imageUrl || "";
+
+    document.querySelector(".box h2").textContent = "Edit Project";
+    form.querySelector('button[type="submit"]').textContent = "Update Project";
+
+    message.textContent = "Edit the details above, then click Update Project.";
+
+    window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+async function deleteProject(id) {
+    if (!confirm("Are you sure you want to delete this project?")) {
+        return;
+    }
+
+    try {
+        const response = await fetch(`${API_URL}/${id}`, {
+            method: "DELETE",
+            headers: authHeaders
+        });
+
+        if (!response.ok) {
+            throw new Error("Delete failed: " + response.status);
+        }
+
+        message.textContent = "Project deleted successfully!";
+        await loadProjects();
+
+    } catch (error) {
+        console.error(error);
+        message.textContent =
+            "Delete failed. The backend must support DELETE /api/projects/{id}.";
+    }
+}
+
+function goBack() {
+    window.location.href = "dashboard.html";
+}
+
+loadProjects();
+</script>
+
+</body>
+</html>

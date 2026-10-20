@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SABARI'S HOME DECOR | Architecture & Interiors</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="navbar">
+    <a href="#home" class="logo">
+        <img src="images/logo.jpg" alt="Sabari's Home Decor Logo">
+    </a>
+
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="architectural-design.html">Architecture</a>
+        <a href="interior-design.html">Interiors</a>
+        <a href="#projects">Projects</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#contact">Contact</a>
+        <a href="admin/login.html">Admin Login</a>
+    </nav>
+
+    <a href="#contact" class="enquire-btn">Enquire Now</a>
+</header>
+
+<!-- Hero Section -->
+<section class="hero" id="home">
+    <div class="hero-content">
+        <p class="subtitle">ARCHITECTURE & INTERIORS</p>
+
+        <h1>
+            Thoughtful Spaces.<br>
+            <span>Timeless</span> Designs.
+        </h1>
+
+        <p class="description">
+            At SABARI'S HOME DECOR, we design beautiful spaces
+            that inspire. From architectural planning to interior
+            execution, we bring your vision to life with creativity,
+            precision and elegance.
+        </p>
+
+        <a href="#projects" class="gold-btn">EXPLORE OUR WORK →</a>
+    </div>
+
+    <div class="hero-caption">
+        ARCHITECTURE<br>
+        MEETS<br>
+        LIFESTYLE
+    </div>
+</section>
+
+<!-- Services Section -->
+<section class="services" id="services">
+    <div class="services-intro">
+        <p class="small-heading">OUR SERVICES</p>
+
+        <h2>Complete Design<br>& Build <span>Solutions</span></h2>
+
+        <p>
+            We offer architectural and interior design services
+            to transform your ideas into beautiful spaces.
+        </p>
+    </div>
+
+    <a href="architectural-design.html" class="service-card">
+        <div class="service-icon">⌂</div>
+        <h3>Architectural Design</h3>
+        <p>Residential & Commercial Building Design</p>
+    </a>
+
+    <a href="interior-design.html" class="service-card">
+        <div class="service-icon">▱</div>
+        <h3>Interior Design</h3>
+        <p>Stylish & Functional Interior Spaces</p>
+    </a>
+
+    <a href="3d-visualization.html" class="service-card">
+        <div class="service-icon">▧</div>
+        <h3>3D Visualization</h3>
+        <p>Realistic Renders & Walkthroughs</p>
+    </a>
+
+    <a href="renovation.html" class="service-card">
+        <div class="service-icon">⌂</div>
+        <h3>Renovation</h3>
+        <p>Modern Upgrades for Better Living</p>
+    </a>
+
+    <a href="landscape-design.html" class="service-card">
+        <div class="service-icon">♧</div>
+        <h3>Landscape Design</h3>
+        <p>Beautiful Outdoor Spaces</p>
+    </a>
+</section>
+
+<!-- About Section -->
+<section class="about" id="about">
+    <div class="about-text">
+        <p class="small-heading">ABOUT US</p>
+
+        <h2>Building Dreams<br>With Timeless Design</h2>
+
+        <p>
+            SABARI'S HOME DECOR brings creativity, elegance
+            and functionality together to create beautiful
+            residential and commercial spaces.
+        </p>
+
+        <a href="about.html" class="gold-btn">KNOW MORE →</a>
+    </div>
+
+    <div class="about-image">
+        <img
+            src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1200&q=85"
+            alt="Luxury interior design">
+    </div>
+</section>
+
+<!-- Dynamic Projects Section -->
+<section class="projects" id="projects">
+    <p class="small-heading">OUR PROJECTS</p>
+    <h2>Featured Projects</h2>
+
+    <div class="project-grid" id="projectGrid">
+        <p>Loading projects...</p>
+    </div>
+</section>
+
+<!-- Gallery Section -->
+<section class="gallery" id="gallery">
+    <p class="small-heading">OUR GALLERY</p>
+
+    <h2>Spaces That Inspire</h2>
+
+    <div class="gallery-grid">
+        <img
+            src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=700&q=85"
+            alt="Luxury living room">
+
+        <img
+            src="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=700&q=85"
+            alt="Modern interior">
+
+        <img
+            src="https://images.unsplash.com/photo-1600607687644-c7171b42498f?auto=format&fit=crop&w=700&q=85"
+            alt="Elegant home">
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section class="contact" id="contact">
+    <p class="small-heading">GET IN TOUCH</p>
+
+    <h2>Let's Design Your Dream Space</h2>
+
+    <p>Have a project in mind? Tell us about it.</p>
+
+    <form id="contactForm">
+        <input type="text" id="name" placeholder="Your Name" required>
+
+        <input type="email" id="email" placeholder="Your Email" required>
+
+        <input
+            type="tel"
+            id="phone"
+            placeholder="Phone Number"
+            pattern="[0-9()+-]{7,20}"
+            required>
+
+        <select id="service" required>
+            <option value="">Select a Service</option>
+            <option>Architectural Design</option>
+            <option>Interior Design</option>
+            <option>3D Visualization</option>
+            <option>Renovation</option>
+            <option>Landscape Design</option>
+        </select>
+
+        <textarea
+            id="message"
+            placeholder="Tell us about your project"
+            rows="4"
+            required></textarea>
+
+        <button type="submit" class="gold-btn">SEND ENQUIRY →</button>
+    </form>
+
+    <p id="formMessage" aria-live="polite"></p>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+    <img src="images/logo.jpg" alt="Sabari's Home Decor Logo">
+
+    <p>Thoughtful Spaces. Timeless Designs.</p>
+
+    <div class="footer-links">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#services">Services</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+    </div>
+
+    <p class="copyright">
+        © <span id="year"></span> SABARI'S HOME DECOR. All rights reserved.
+    </p>
+</footer>
+
+<!-- WhatsApp Contact Button -->
+<a
+    href="https://wa.me/9626228999?text=Hello%20Sabari%27s%20Home%20Decor%2C%20I%20am%20interested%20in%20your%20services."
+    class="whatsapp-float"
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="Contact us on WhatsApp">
+    <span>☏</span>
+    WhatsApp Us
+</a>
+
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>
+    emailjs.init({
+        publicKey: "pSg-UqKb7WwxeXMBB"
+    });
+</script>
+
+<script src="script.js"></script>
+
+<!-- Load Projects From Backend -->
+<script>
+    const PROJECTS_API =
+        "https://sabarish-home-decor-backend1.onrender.com/api/projects";
+
+    async function loadPublicProjects() {
+        const grid = document.getElementById("projectGrid");
+
+        grid.textContent = "Loading projects...";
+
+        try {
+            const response = await fetch(PROJECTS_API);
+
+            if (!response.ok) {
+                throw new Error("Project API request failed");
+            }
+
+           const adminProjects = await response.json();
+
+const sampleProjects = [
+    {
+        id: "sample-villa",
+        title: "Modern Villa",
+        category: "Residential Architecture & Interiors",
+        description: "A modern residential design focused on elegant architecture, comfortable living spaces, and a contemporary appearance.",
+        imageUrl: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=85",
+        sampleKey: "villa"
+    },
+    {
+        id: "sample-home",
+        title: "Contemporary Home",
+        category: "Residential Interior Design",
+        description: "A contemporary interior concept combining stylish furnishings, thoughtful layouts, and functional living spaces.",
+        imageUrl: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1200&q=85",
+        sampleKey: "home"
+    },
+    {
+        id: "sample-commercial",
+        title: "Commercial Space",
+        category: "Commercial Architecture & Interiors",
+        description: "A contemporary commercial design concept intended to create an attractive and practical environment.",
+        imageUrl: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=85",
+        sampleKey: "commercial"
+    }
+];
+
+const projects = [
+    ...sampleProjects,
+    ...(Array.isArray(adminProjects) ? adminProjects : [])
+];
+
+            grid.innerHTML = "";
+
+            if (!Array.isArray(projects) || projects.length === 0) {
+                grid.textContent = "Our projects will be displayed here soon.";
+                return;
+            }
+
+            projects.forEach(project => {
+                const card = document.createElement("article");
+                card.className = "project-card";
+
+                if (project.imageUrl) {
+                    const image = document.createElement("img");
+                    image.src = project.imageUrl;
+                    image.alt = project.title || "Home decor project";
+                    image.loading = "lazy";
+                    image.onerror = function () {
+                        this.style.display = "none";
+                    };
+                    card.appendChild(image);
+                }
+
+                const title = document.createElement("h3");
+                title.textContent = project.title || "Home Decor Project";
+                card.appendChild(title);
+
+                const description = document.createElement("p");
+                description.textContent = project.description || "";
+                card.appendChild(description);
+
+                const category = document.createElement("p");
+category.textContent = project.category || "";
+card.appendChild(category);
+
+// View Project button
+const viewButton = document.createElement("a");
+viewButton.className = "gold-btn";
+viewButton.textContent = "View Project →";
+
+if (project.sampleKey) {
+    viewButton.href =
+        "project-details.html?project=" +
+        encodeURIComponent(project.sampleKey);
+} else {
+    viewButton.href =
+        "project-details.html?id=" +
+        encodeURIComponent(project.id);
+}
+
+card.appendChild(viewButton);
+
+grid.appendChild(card);
+            });
+
+        } catch (error) {
+            console.error("Could not load projects:", error);
+            grid.textContent =
+                "Projects are temporarily unavailable. Please try again later.";
+        }
+    }
+
+    loadPublicProjects();
+</script>
+
+</body>
+</html>
