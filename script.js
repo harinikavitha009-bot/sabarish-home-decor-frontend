@@ -22,7 +22,6 @@ document.getElementById("contactForm").addEventListener("submit", async function
 
     formMessage.textContent = "Submitting your enquiry...";
 
-    // Step 1: Save enquiry in the backend database
     try {
         const response = await fetch(
             "https://sabarish-home-decor-backend1.onrender.com/api/contact",
@@ -45,41 +44,16 @@ document.getElementById("contactForm").addEventListener("submit", async function
             throw new Error("Unable to save your enquiry.");
         }
 
-    } catch (error) {
-        console.error("Contact form error:", error);
-
-        formMessage.textContent =
-            "Unable to submit your enquiry. Please try again later.";
-
-        return;
-    }
-
-    // Step 2: Send enquiry notification using EmailJS
-    try {
-        await emailjs.send(
-            "service_nn7fyd5",
-            "template_7f8g4jn",
-            {
-                name: name,
-                email: email,
-                phone: phone,
-                service: service,
-                message: message
-            }
-        );
-
         formMessage.textContent =
             "Thank you, " + name +
             "! Your enquiry has been submitted successfully.";
 
         this.reset();
 
-    } catch (emailError) {
-        console.error("EmailJS error:", emailError);
+    } catch (error) {
+        console.error("Contact form error:", error);
 
         formMessage.textContent =
-            "Your enquiry was saved, but email notification failed. Please contact us on WhatsApp.";
-
-        this.reset();
+            "Unable to submit your enquiry. Please try again later.";
     }
 });
